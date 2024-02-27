@@ -1,0 +1,33 @@
+name: Simple Docker-in-Docker CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Run Docker Compose Up
+      run: |
+        docker-compose up -d httpbin
+        sleep 10 # Wait for httpbin to be fully up and running
+
+    - name: Run tests with Docker Compose
+      run: |
+        docker-compose up -d pytest
+        sleep 10
+
+    - name: Docker Compose Down
+      run: |
+        docker-compose down
+
+    - name: Upload pytest results
+      uses: actions/upload-artifact@v2
+      with:
+        name: pytest-results
+        path: ./results/report.xml
