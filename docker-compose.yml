@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  httpbin:
+    image: kennethreitz/httpbin
+    ports:
+      - "8080:80"
+
+  pytest:
+    image: gitlab-registry.naerm.team/arch/ci-images/naerm-testing:mr-68
+    user: "tester"
+    volumes:
+      - ./results:/results
+      - ./pytests:/pytests
+    depends_on:
+      - httpbin
+    command: pytest /pytests --junitxml=/results/report.xml
