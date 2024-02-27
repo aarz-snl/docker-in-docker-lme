@@ -7,7 +7,7 @@ services:
       - "8080:80"
 
   pytest:
-    image: gitlab-registry.naerm.team/arch/ci-images/naerm-testing:mr-68
+    image: python:3.9
     user: "tester"
     volumes:
       - ./results:/results
