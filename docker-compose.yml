@@ -8,10 +8,9 @@ services:
 
   pytest:
     image: python:3.9
-    user: "tester"
     volumes:
       - ./results:/results
       - ./pytests:/pytests
     depends_on:
       - httpbin
-    command: pytest /pytests --junitxml=/results/report.xml
+    command: /bin/sh -c "pip install pytest requests && pytest /pytests --junitxml=/results/report.xml"
