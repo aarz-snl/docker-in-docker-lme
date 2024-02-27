@@ -27,7 +27,7 @@ jobs:
         docker-compose down
 
     - name: Upload pytest results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: pytest-results
         path: ./results/report.xml
